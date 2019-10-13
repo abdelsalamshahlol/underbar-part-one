@@ -62,28 +62,70 @@
   // is not present in the array.
   _.indexOf = function(array, target){
     /* START SOLUTION */
-      return arguments[2] === undefined ? array.indexOf(target): (typeof arguments[2] !== Boolean ? array.indexOf(target,arguments[2]) : array.split((array.length-1)/2).indexOf(target) ); 
+    if(typeof arguments[2] === undefined && typeof arguments[0] !== undefined){
+      return array.indexOf(target);
+    }else if(arguments[0] !== undefined && typeof arguments[2] !== undefined){
+      return array.indexOf(target,arguments[2]);
+    }else if(arguments[0] !== undefined && typeof arguments[1] !== undefined &&  arguments[2] !== undefined){
+      let firstHalf = array.split(0,Math.floor(array.length/2)).indexOf(target);
+      let secondHalf = array.split(Math.floor(array.length/2)).indexOf(target);
+      return firstHalf > 0 ? firstHalf: (secondHalf>0 ? secondHalf : -1);
+    }else{
+      return -1;
+    }
     /* END SOLUTION */
   };
+
+  // Returns
+  // Added because its required by the tests and the function signture is not included by default
+
+  _.range = function(){
+    /* START SOLUTION */
+
+    /* END SOLUTION */
+  }
+
+  _.findIndex = function(array,test) {
+    /* START SOLUTION */
+    return array!==undefined && test !==undefined ? array.findIndex(test) : -1;
+    /* END SOLUTION */
+  }
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
     /* START SOLUTION */
-
+      let r = [];
+      for(let i of collection){
+        test(i) ? r.push(i) : '';
+      }
+      return r;
     /* END SOLUTION */
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     /* START SOLUTION */
-
+      let r = [];
+      for(let i of collection){
+        !test(i) ? r.push(i) : '';
+      }
+      return r;
     /* END SOLUTION */
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
     /* START SOLUTION */
-
+      if(typeof iterator !== undefined){
+        return Array.from(new Set(array))
+      }else{
+        let r = [];
+        for(let i of array){
+            iterator(i) ? r.push(i) : ''
+        }
+        console.log(r)
+        return r;
+      }
     /* END SOLUTION */
   };
 
